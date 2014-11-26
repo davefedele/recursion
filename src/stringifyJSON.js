@@ -22,14 +22,16 @@ var stringifyJSON = function(obj) {
     console.log("null");
     stringified += "null";
   }
-//returnecursive for all other objects
+//return recursive for all other objects
   else if (Array.isArray(obj)) {
     console.log("array");
     stringified += "[";
     for (var i=0; i<obj.length; i++) {
       stringified += stringifyJSON(obj[i]);
-      if(obj.length < 1 || i<obj.length){
-        stringified += ",";
+      if (obj.length !== 1) {
+        if (i !== obj.length -1) {
+          stringified += ",";
+        }
       }
     }
     stringified += "]";
@@ -40,7 +42,8 @@ var stringifyJSON = function(obj) {
   //   }
   // }
 
+  console.log("------------------------------");
   console.log(obj);
-
+  console.log("JSON_stringified = " + stringified);
   return stringified;
 };
