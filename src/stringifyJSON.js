@@ -22,6 +22,14 @@ var stringifyJSON = function(obj) {
     console.log("null");
     stringified += "null";
   }
+  else if (obj === undefined) {
+    console.log("undefined");
+    //do nothing
+  }
+  else if (typeof obj === "function") {
+    console.log("function");
+    //do nothing
+  }
 //return recursive for all other objects
   if (Array.isArray(obj)) {
     console.log("array");
@@ -43,9 +51,22 @@ var stringifyJSON = function(obj) {
       ;
     }
     else {
+      var illegal = false;
       for (var key in obj) {
-        console.log(key);
-        stringified += stringifyJSON(key) + ':' + stringifyJSON(obj[key]) ;
+        if (obj[key] === undefined) {
+          console.log("skipping undefined values");
+          illegal = true;
+        }
+        else if (typeof obj[key] === "function") {
+          console.log("skipping functions");
+          illegal = true;
+        }
+        else{
+          stringified += stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ",";
+        }
+      }
+      if(!illegal) {
+        stringified = stringified.slice(0,-1);
       }
     }
     stringified += "}";
