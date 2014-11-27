@@ -23,7 +23,7 @@ var stringifyJSON = function(obj) {
     stringified += "null";
   }
 //return recursive for all other objects
-  else if (Array.isArray(obj)) {
+  if (Array.isArray(obj)) {
     console.log("array");
     stringified += "[";
     for (var i=0; i<obj.length; i++) {
@@ -36,13 +36,22 @@ var stringifyJSON = function(obj) {
     }
     stringified += "]";
   }
-  // else {
-  //   for (var key in obj) {
-  //     stringified += key;
-  //   }
-  // }
+  else if (Object.prototype.toString.call(obj) === "[object Object]") {
+    console.log("for strict objects")
+    stringified += "{";
+    if (Object.keys(obj).length === 0){
+      ;
+    }
+    else {
+      for (var key in obj) {
+        console.log(key)
+        stringified += '"' + stringifyJSON(key) ;//+ '":"' + stringifyJSON(obj[key] + '"';
+      }
+    }
+    stringified += "}";
+  }
 
-  console.log("------------------------------");
+  console.log("----------------------------------");
   console.log(obj);
   console.log("JSON_stringified = " + stringified);
   return stringified;
