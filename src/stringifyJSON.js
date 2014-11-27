@@ -44,8 +44,8 @@ var stringifyJSON = function(obj) {
     }
     else {
       for (var key in obj) {
-        console.log(key)
-        stringified += '"' + stringifyJSON(key) ;//+ '":"' + stringifyJSON(obj[key] + '"';
+        console.log(key);
+        stringified += stringifyJSON(key) + ':' + stringifyJSON(obj[key]) ;
       }
     }
     stringified += "}";
