@@ -11,18 +11,17 @@
 
     function childRecursion(startingPoint) {
       var nodeChildren = startingPoint.childNodes;
-      for (var i=0; i<nodeChildren.length; i++) {
-        var nodeClasses = nodeChildren[i].classList;
+      _.each( nodeChildren, function(value) {
+        var nodeClasses = value.classList;
         if (nodeClasses && nodeClasses.length !== 0) {
-          console.log(nodeChildren[i] + " has these classes: " + nodeClasses);
-          for (var j=0; j<nodeClasses.length; j++) {
-            if (nodeClasses[j] === className) {
-              result.push(nodeChildren[i]);
+          _.each( nodeClasses, function(foundClassName) {
+            if (foundClassName === className) {
+              result.push(value);
             }
-          }
+          });
         }
-        childRecursion(nodeChildren[i]);
-      }
+        childRecursion(value);
+      });
     }
 
     childRecursion(documentBody);
